@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contagem Regressiva para 13 de Julho</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Press Start 2P', cursive;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #timer {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        #timer div {
+            font-size: 1.5em;
+            margin: 0 10px;
+        }
+
+        #timer span {
+            font-weight: bold;
+        }
+
+        .message {
+            position: absolute;
+            color: red;
+            font-size: 2em;
+            animation: vibrate 0.5s infinite;
+        }
+
+        @keyframes vibrate {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        #youtube-audio {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contagem Regressiva para o <span id="rock-word">ROCK</span> !</h1>
+        <div id="timer">
+            <div><span id="days"></span> dias</div>
+            <div><span id="hours"></span> horas</div>
+            <div><span id="minutes"></span> minutos</div>
+            <div><span id="seconds"></span> segundos</div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function playYouTubeAudio() {
+                var iframe = document.getElementById("youtube-audio");
+                iframe.src = "https://www.youtube.com/embed/wchOkp8lmWg?autoplay=1&loop=1&controls=0&showinfo=0&autohide=1&mute=1";
+            }
+
+            document.getElementById("rock-word").addEventListener("click", function() {
+                createRandomMessage("ROCK PORRA");
+                playYouTubeAudio();
+            });
+
+            var targetDate = new Date("July 13, 2024 00:00:00").getTime();
+
+            var countdown = setInterval(function() {
+                var now = new Date().getTime();
+                var distance = targetDate - now;
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                document.getElementById("days").innerHTML = days;
+                document.getElementById("hours").innerHTML = hours;
+                document.getElementById("minutes").innerHTML = minutes;
+                document.getElementById("seconds").innerHTML = seconds;
+                if (distance < 0) {
+                    clearInterval(countdown);
+                    document.getElementById("timer").innerHTML = "EXPIRED";
+                }
+            }, 1000);
+
+            function createRandomMessage(text) {
+                var message = document.createElement("div");
+                message.className = "message";
+                message.innerText = text;
+                var x = Math.random() * (window.innerWidth - 100);
+                var y = Math.random() * (window.innerHeight - 50);
+                message.style.left = x + "px";
+                message.style.top = y + "px";
+                document.body.appendChild(message);
+            }
+        });
+    </script>
+    <iframe id="youtube-audio" width="0" height="0" frameborder="0" allowfullscreen></iframe>
+</body>
+</html>
