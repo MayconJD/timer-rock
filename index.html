@@ -58,7 +58,7 @@
             100% { transform: translate(0); }
         }
 
-        #youtube-audio {
+        audio {
             display: none;
         }
     </style>
@@ -73,16 +73,20 @@
             <div><span id="seconds"></span> segundos</div>
         </div>
     </div>
+    <audio id="rock-audio" controls>
+        <source src="angra-carryon.mp3" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            function playYouTubeAudio() {
-                var iframe = document.getElementById("youtube-audio");
-                iframe.src = "https://www.youtube.com/embed/wchOkp8lmWg?autoplay=1&loop=1&controls=0&showinfo=0&autohide=1&mute=1";
+            function playRockAudio() {
+                var audio = document.getElementById("rock-audio");
+                audio.play();
             }
 
             document.getElementById("rock-word").addEventListener("click", function() {
                 createRandomMessage("ROCK PORRA");
-                playYouTubeAudio();
+                playRockAudio();
             });
 
             var targetDate = new Date("July 13, 2024 00:00:00").getTime();
@@ -116,6 +120,5 @@
             }
         });
     </script>
-    <iframe id="youtube-audio" width="0" height="0" frameborder="0" allowfullscreen></iframe>
 </body>
 </html>
